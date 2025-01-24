@@ -163,7 +163,7 @@ def scene_reconstruction(dataset, opt, pipe, saving_iterations,
             timer.pause()
             if (iteration in saving_iterations):
                 print("\n[ITER {}] Saving Gaussians".format(iteration))
-                gaussians.save(iteration, 'output')
+                gaussians.save(iteration, dataset.model_path)
                 deform.save_weights(args.model_path, iteration)
                 if iteration in checkpoint_iterations:
                     print("\n[ITER {}] Saving Checkpoint".format(iteration))
