@@ -47,9 +47,9 @@ class ParamGroup:
 class ModelParams(ParamGroup): 
     def __init__(self, parser, sentinel=False):
         self.sh_degree = 3
-        self._source_path = "/cvlabdata1/wzx/input/bear"
-        self._model_path = "/cvlabdata1/wzx/output/bear"
-        self._images = "/cvlabdata1/wzx/images/bear"
+        self._source_path = "/cvlabdata1/wzx/realsci/input/truck"
+        self._model_path = "/cvlabdata1/wzx/realsci/output/truck"
+        self._images = "/cvlabdata1/wzx/realsci/images/truck"
         self._resolution = -1
         self._white_background = True
         self.n_points = 10000 # init points number
@@ -96,10 +96,10 @@ class OptimizationParams(ParamGroup):
         self.weight_constraint_after = 0.2
         self.weight_decay_iteration = 5000
         self.opacity_reset_interval = 3000
-        self.densification_interval = 200
+        self.densification_interval = 100
         self.densify_from_iter = 400#500
         self.densify_until_iter = 15_000
-        self.densify_grad_threshold = 0.0003
+        self.densify_grad_threshold = 0.000001
         self.pruning_from_iter = 500
         self.pruning_interval = 100
         self.opacity_threshold = 0.005

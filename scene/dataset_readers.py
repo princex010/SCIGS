@@ -230,14 +230,14 @@ def init_scene(meas_path, n_point):
         image = Image.open(os.path.join(gt_path, f))
         image_np = np.array(image)
         gt_images.append(torch.tensor(image_np / 255.0).permute(2, 0, 1).unsqueeze(0))
-    diffMask = np.load(os.path.join(meas_path, 'mask_rgb_0.125.npy'))
-    meas = np.load(os.path.join(meas_path, 'meas_rgb_0.125.npy'))
+    diffMask = np.load(os.path.join(meas_path, 'mask.npy'))
+    meas = np.load(os.path.join(meas_path, 'meas.npy'))
+    H, W = meas.shape[0], meas.shape[1]
     diffMask = torch.Tensor(diffMask)
-    # diffMask = diffMask.unsqueeze(-1)
+    diffMask = diffMask.unsqueeze(-1)
     meas = torch.Tensor(meas)
     # 初始化相机
     n_frame = diffMask.shape[0]
-    H, W = gt_images[0].shape[-2], gt_images[0].shape[-1]
     caminfos = init_cam_infos(H, W, diffMask, n_frame)
     # 在相机视锥内初始化点云，并将点云存储为ply
     xyz, rgb = random_initialize(n_point, caminfos[0])

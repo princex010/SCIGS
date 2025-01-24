@@ -61,9 +61,9 @@ def scene_reconstruction(dataset, opt, pipe, saving_iterations,
     first_iter += 1
     viewpoint_cams = scene.getCameras()
 
-    gt_images = scene.gt_images
-    gt_image_tensor = torch.cat(gt_images, 0).cuda()
-    gt_image_tensor = gt_image_tensor.type(torch.cuda.FloatTensor)
+    # gt_images = scene.gt_images
+    # gt_image_tensor = torch.cat(gt_images, 0).cuda()
+    # gt_image_tensor = gt_image_tensor.type(torch.cuda.FloatTensor)
     d_xyzs = [0.0 for i in range(scene.n_frame)]
     gaussians.compute_3D_filter(d_xyzs, cameras=viewpoint_cams)
     print("data loading done")
@@ -124,14 +124,14 @@ def scene_reconstruction(dataset, opt, pipe, saving_iterations,
         Ll1 = l1_loss(sci_image, scene.meas)
         L_ssim = pssim(sci_image.unsqueeze(0) * 255, scene.meas.unsqueeze(0) * 255)
 
-        Ll1_frame = l1_loss(image_tensor, gt_image_tensor).mean().double()
+        # Ll1_frame = l1_loss(image_tensor, gt_image_tensor).mean().double()
 
-        psnr_frame = psnr(image_tensor, gt_image_tensor).mean().double()
+        # psnr_frame = psnr(image_tensor, gt_image_tensor).mean().double()
 
-        ssim_frame = pssim(image_tensor * 255, gt_image_tensor * 255)
+        # ssim_frame = pssim(image_tensor * 255, gt_image_tensor * 255)
 
-        if iteration % 200 == 0:
-            lpips_frame = lpips_model(image_tensor, gt_image_tensor).mean().double()
+        # if iteration % 200 == 0:
+        #     lpips_frame = lpips_model(image_tensor, gt_image_tensor).mean().double()
 
         loss = (1 - opt.lambda_dssim) * Ll1 + opt.lambda_dssim * (1 - L_ssim)
         # loss = Ll1
@@ -149,9 +149,9 @@ def scene_reconstruction(dataset, opt, pipe, saving_iterations,
             total_point = gaussians._xyz.shape[0]
             if iteration % 10 == 0:
                 progress_bar.set_postfix({"Loss": f"{loss.item():.{7}f}",
-                                          "psnr_f": f"{psnr_frame:.{3}f}",
-                                          "ssim_f": f"{ssim_frame:.{4}f}",
-                                          "lpips_f":f"{lpips_frame:.{4}f}", 
+                                        #   "psnr_f": f"{psnr_frame:.{3}f}",
+                                        #   "ssim_f": f"{ssim_frame:.{4}f}",
+                                        #   "lpips_f":f"{lpips_frame:.{4}f}", 
                                         #   "l1": f"{Ll1:.{7}f}",
                                         #   "psnr": f"{psnr_sci:.{3}f}",                                         
                                           "point": f"{total_point}"})
